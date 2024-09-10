@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Donor {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  phone     String
+  bloodType String
+  location  String
+  createdAt DateTime @default(now())
+
+  CampaignErollment CampaignEnrollment[]
+
+  @@map("donors")
+}
+
+model Clinic {
+  id        String   @id @default(uuid())
+  name      String
+  adress    String
+  email     String   @unique
+  phone     String
+  createdAt DateTime @default(now())
+
+  Campaign Campaign[]
+
+  @@map("clinics")
+}
+
+model Campaign {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  startDAte   DateTime
+  endDate     DateTime
+  location    String
+  createdAt   DateTime @default(now())
+
+  clinicId String
+  clinic   Clinic @relation(fields: [clinicId], references: [id])
+
+  CampaignEnrollment CampaignEnrollment[]
+
+  @@map("campaigns")
+}
+
+model CampaignEnrollment {
+  donorId    String
+  campaignId String
+  createdAt  DateTime @default(now())
+
+  donor    Donor    @relation(fields: [donorId], references: [id])
+  campaign Campaign @relation(fields: [campaignId], references: [id])
+
+  @@id([donorId, campaignId])
+  @@map("campaign_enrollments")
+}
