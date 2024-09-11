@@ -17,12 +17,14 @@ model Donor {
   id        String   @id @default(uuid())
   name      String
   email     String   @unique
-  phone     String
+  phone     String?
   bloodType String
   location  String
+  available Boolean
   createdAt DateTime @default(now())
 
-  CampaignErollment CampaignEnrollment[]
+  campaignId String?
+  campaign   Campaign? @relation(fields: [campaignId], references: [id])
 
   @@map("donors")
 }
@@ -49,22 +51,22 @@ model Campaign {
   location    String
   createdAt   DateTime @default(now())
 
+  Donor Donor[]
+
   clinicId String
   clinic   Clinic @relation(fields: [clinicId], references: [id])
-
-  CampaignEnrollment CampaignEnrollment[]
 
   @@map("campaigns")
 }
 
-model CampaignEnrollment {
-  donorId    String
-  campaignId String
-  createdAt  DateTime @default(now())
+// model CampaignEnrollment {
+//   donorId    String
+//   campaignId String
+//   createdAt  DateTime @default(now())
 
-  donor    Donor    @relation(fields: [donorId], references: [id])
-  campaign Campaign @relation(fields: [campaignId], references: [id])
+//   donor    Donor    @relation(fields: [donorId], references: [id])
+//   campaign Campaign @relation(fields: [campaignId], references: [id])
 
-  @@id([donorId, campaignId])
-  @@map("campaign_enrollments")
-}
+//   @@id([donorId, campaignId])
+//   @@map("campaign_enrollments")
+// }
