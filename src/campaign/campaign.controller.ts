@@ -66,7 +66,7 @@ export class CampaignController {
     status: 200,
     description: 'Campaign deleted successfuly',
   })
-  delete(@Param('id') id: string) {
+  remove(@Param('id') id: string) {
     return this.campaignService.delete(id);
   }
 }
