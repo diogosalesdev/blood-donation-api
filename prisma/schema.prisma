@@ -33,7 +33,7 @@ model Donor {
 model Clinic {
   id        String   @id @default(uuid())
   name      String
-  adress    String
+  address   String
   email     String   @unique
   phone     String
   createdAt DateTime @default(now())
@@ -47,7 +47,7 @@ model Campaign {
   id          String   @id @default(uuid())
   title       String
   description String
-  startDAte   DateTime
+  startDate   DateTime
   endDate     DateTime
   location    String
   createdAt   DateTime @default(now())
@@ -55,19 +55,7 @@ model Campaign {
   Donor Donor[]
 
   clinicId String
-  clinic   Clinic @relation(fields: [clinicId], references: [id])
+  Clinic   Clinic @relation(fields: [clinicId], references: [id])
 
   @@map("campaigns")
 }
-
-// model CampaignEnrollment {
-//   donorId    String
-//   campaignId String
-//   createdAt  DateTime @default(now())
-
-//   donor    Donor    @relation(fields: [donorId], references: [id])
-//   campaign Campaign @relation(fields: [campaignId], references: [id])
-
-//   @@id([donorId, campaignId])
-//   @@map("campaign_enrollments")
-// }

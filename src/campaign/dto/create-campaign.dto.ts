@@ -1,4 +1,4 @@
-import { IsDateString, IsNotEmpty, IsString, isUUID } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateCampaignDTO {
   @IsString()
@@ -15,7 +15,11 @@ export class CreateCampaignDTO {
   @IsDateString()
   endDate: string;
 
-  @isUUID()
+  @IsString()
+  @IsNotEmpty()
+  location: string;
+
+  @IsString()
   @IsNotEmpty()
   clinicId: string;
 }
