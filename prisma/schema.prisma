@@ -17,10 +17,11 @@ model Donor {
   id        String   @id @default(uuid())
   name      String
   email     String   @unique
-  phone     String?
+  phone     String
+  cpf       String   @unique
   bloodType String
-  location  String
-  available Boolean
+  address   String
+  available Boolean  @default(true)
   createdAt DateTime @default(now())
 
   campaignId String?
