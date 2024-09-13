@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13-alpine
+    container_name: blood_donation_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - blood-donation-net
+    
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: blood_donation_api    
+    ports:
+      - "${APP_PORT}:3000"
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+    networks:
+      - blood-donation-net
+    
+volumes:
+  postgres_data:
+
+networks:
+  blood-donation-net:
+    driver: bridge
