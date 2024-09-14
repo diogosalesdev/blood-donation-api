@@ -2,14 +2,10 @@ FROM node:18-alpine
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 COPY . .
 
 RUN npx prisma generate
-
-RUN docker compose up
-
-RUN npx prisma migrate deploy
 
 EXPOSE 3000
 
