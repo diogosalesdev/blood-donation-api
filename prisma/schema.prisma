@@ -17,6 +17,8 @@ model Donor {
   id        String   @id @default(uuid())
   name      String
   email     String   @unique
+  userId    String?  @unique
+  user      User?    @relation(fields: [userId], references: [id])
   phone     String
   cpf       String   @unique
   bloodType String
@@ -35,8 +37,11 @@ model Clinic {
   name      String
   address   String
   email     String   @unique
+  userId    String?  @unique
+  user      User?    @relation(fields: [userId], references: [id])
   phone     String
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   Campaign Campaign[]
 
@@ -58,4 +63,23 @@ model Campaign {
   Clinic   Clinic @relation(fields: [clinicId], references: [id])
 
   @@map("campaigns")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      Role
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Donor     Donor?
+  Clinic    Clinic?
+
+  @@map("users")
+}
+
+enum Role {
+  USER
+  CLINIC
+  ADMIN
 }
