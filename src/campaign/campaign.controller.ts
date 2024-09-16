@@ -6,31 +6,18 @@ import {
   Param,
   Patch,
   Post,
-  UseGuards,
 } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
-import { Role } from '@prisma/client';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { Roles } from '../auth/roles.decorator';
-import { RolesGuard } from '../auth/roles.guard';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CampaignService } from './campaign.service';
 import { CreateCampaignDTO } from './dto/create-campaign.dto';
 import { UpdateCampaignDTO } from './dto/update-campaign.dto';
 
 @ApiTags('Campaigns')
-@ApiBearerAuth()
 @Controller('campaigns')
-@UseGuards(JwtAuthGuard, RolesGuard)
 export class CampaignController {
   constructor(private readonly campaignService: CampaignService) {}
 
   @Post()
-  @Roles(Role.CLINIC, Role.ADMIN)
   @ApiOperation({ summary: 'Create a new Campaign' })
   @ApiResponse({
     status: 201,
@@ -41,7 +28,6 @@ export class CampaignController {
   }
 
   @Get()
-  @Roles(Role.CLINIC, Role.ADMIN)
   @ApiOperation({ summary: 'Get all campaigns' })
   @ApiResponse({
     status: 200,
@@ -52,7 +38,6 @@ export class CampaignController {
   }
 
   @Get(':id')
-  @Roles(Role.CLINIC, Role.ADMIN)
   @ApiOperation({ summary: 'Get campaign details by ID' })
   @ApiResponse({
     status: 200,
@@ -63,7 +48,6 @@ export class CampaignController {
   }
 
   @Patch(':id')
-  @Roles(Role.CLINIC, Role.ADMIN)
   @ApiOperation({ summary: 'Update a campaign by ID' })
   @ApiResponse({
     status: 200,
@@ -77,7 +61,6 @@ export class CampaignController {
   }
 
   @Delete(':id')
-  @Roles(Role.CLINIC, Role.ADMIN)
   @ApiOperation({ summary: 'Delete a campaign by ID' })
   @ApiResponse({
     status: 200,
