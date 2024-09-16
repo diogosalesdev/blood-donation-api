@@ -6,31 +6,18 @@ import {
   Param,
   Patch,
   Post,
-  UseGuards,
 } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
-import { Role } from '@prisma/client';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { Roles } from '../auth/roles.decorator';
-import { RolesGuard } from '../auth/roles.guard';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ClinicService } from './clinic.service';
 import { CreateClinicDTO } from './dto/create-clinic.dto';
 import { UpdateClinicDTO } from './dto/update-clinic.dto';
 
 @ApiTags('Clinics')
-@ApiBearerAuth()
 @Controller('clinics')
-@UseGuards(JwtAuthGuard, RolesGuard)
 export class ClinicController {
   constructor(private readonly clinicService: ClinicService) {}
 
   @Post()
-  @Roles(Role.CLINIC, Role.ADMIN)
   @ApiOperation({ summary: 'Create a new clinic.' })
   @ApiResponse({
     status: 201,
@@ -41,7 +28,6 @@ export class ClinicController {
   }
 
   @Get()
-  @Roles(Role.CLINIC, Role.ADMIN)
   @ApiOperation({ summary: 'Get all clinics.' })
   @ApiResponse({
     status: 200,
@@ -52,7 +38,6 @@ export class ClinicController {
   }
 
   @Get(':id')
-  @Roles(Role.CLINIC, Role.ADMIN)
   @ApiOperation({ summary: 'Get a clinic details by ID' })
   @ApiResponse({
     status: 200,
@@ -63,7 +48,6 @@ export class ClinicController {
   }
 
   @Patch(':id')
-  @Roles(Role.CLINIC, Role.ADMIN)
   @ApiOperation({ summary: 'Update a clinic by ID' })
   @ApiResponse({
     status: 200,
@@ -74,7 +58,6 @@ export class ClinicController {
   }
 
   @Delete(':id')
-  @Roles(Role.CLINIC, Role.ADMIN)
   @ApiOperation({ summary: 'Remove a clinic.' })
   @ApiResponse({
     status: 200,
