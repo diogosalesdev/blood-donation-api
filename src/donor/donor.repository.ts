@@ -1,29 +1,76 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { UtilsService } from 'src/utils/utils.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateDonorDTO } from './dto/create-donor.dto';
 import { UpdateDonorDTO } from './dto/update-donor.dto';
 
 @Injectable()
 export class DonorRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly utils: UtilsService,
+  ) {}
 
-  create(data: CreateDonorDTO) {
-    return this.prisma.donor.create({ data });
+  async create(data: CreateDonorDTO) {
+    const { email, password } = data;
+
+    const userWithSameEmail = await this.prisma.donor.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (userWithSameEmail) {
+      throw new ConflictException(
+        'User with same e-mail address already exists!',
+      );
+    }
+
+    const hashedPassword = await this.utils.hashPassword(password);
+
+    return this.prisma.donor.create({
+      data: {
+        ...data,
+        password: hashedPassword,
+      },
+    });
   }
 
   findAll() {
     return this.prisma.donor.findMany();
   }
 
-  findOne(id: string) {
-    return this.prisma.donor.findUnique({ where: { id } });
+  async findOne(id: string) {
+    const existsDonor = await this.prisma.donor.findUnique({ where: { id } });
+
+    if (!existsDonor) {
+      throw new NotFoundException('Donor not found!');
+    }
+
+    return existsDonor;
   }
 
-  update(id: string, data: UpdateDonorDTO) {
+  async update(id: string, data: UpdateDonorDTO) {
+    const existsDonor = await this.prisma.donor.findUnique({ where: { id } });
+
+    if (!existsDonor) {
+      throw new NotFoundException('Donor not found!');
+    }
+
     return this.prisma.donor.update({ where: { id }, data });
   }
 
-  delete(id: string) {
+  async delete(id: string) {
+    const existsDonor = await this.prisma.donor.findUnique({ where: { id } });
+
+    if (!existsDonor) {
+      throw new NotFoundException('Donor not found!');
+    }
+
     return this.prisma.donor.delete({ where: { id } });
   }
 }

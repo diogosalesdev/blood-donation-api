@@ -33,4 +33,12 @@ export class UpdateClinicDTO {
   @IsEmail()
   @IsNotEmpty()
   email?: string;
+
+  @ApiProperty({
+    description: 'Senha do usuário',
+    example: 'senha12345',
+  })
+  @IsString()
+  @IsNotEmpty()
+  password?: string;
 }

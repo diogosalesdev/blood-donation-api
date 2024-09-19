@@ -8,7 +8,7 @@ export class CreateClinicDTO {
   })
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name!: string;
 
   @ApiProperty({
     description: 'Endereço da c;ínica',
@@ -16,7 +16,7 @@ export class CreateClinicDTO {
   })
   @IsString()
   @IsNotEmpty()
-  address: string;
+  address!: string;
 
   @ApiProperty({
     description: 'Número de telefone da clínica',
@@ -24,7 +24,15 @@ export class CreateClinicDTO {
   })
   @IsString()
   @IsNotEmpty()
-  phone: string;
+  phone!: string;
+
+  @ApiProperty({
+    description: 'Senha do usuário',
+    example: 'senha12345',
+  })
+  @IsString()
+  @IsNotEmpty()
+  password!: string;
 
   @ApiProperty({
     description: 'Email da clínica',
@@ -32,5 +40,5 @@ export class CreateClinicDTO {
   })
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  email!: string;
 }
