@@ -8,29 +8,29 @@ export class CreateCampaignDTO {
   })
   @IsString()
   @IsNotEmpty()
-  title: string;
+  title!: string;
 
   @ApiProperty({
     description: 'Descrição da campanha',
-    example: 'Camapnha de doação para obter estoque para o carnaval',
+    example: 'Campanha de doação para obter estoque para o carnaval',
   })
   @IsString()
   @IsNotEmpty()
-  description: string;
+  description!: string;
 
   @ApiProperty({
     description: 'Data de início da campanha',
     example: '06-01-2025',
   })
   @IsDateString()
-  startDate: string;
+  startDate!: string;
 
   @ApiProperty({
     description: 'Data de encerramento da campanha',
     example: '20-02-2025',
   })
   @IsDateString()
-  endDate: string;
+  endDate!: string;
 
   @ApiProperty({
     description: 'Local/Região de alcance da campanha',
@@ -38,7 +38,7 @@ export class CreateCampaignDTO {
   })
   @IsString()
   @IsNotEmpty()
-  location: string;
+  location!: string;
 
   @ApiProperty({
     description: 'Id da clínica que criou a campanha',
@@ -46,5 +46,5 @@ export class CreateCampaignDTO {
   })
   @IsString()
   @IsNotEmpty()
-  clinicId: string;
+  clinicId!: string;
 }

@@ -3,8 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { UtilsService } from 'src/utils/utils.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { UtilsService } from '../utils/utils.service';
 import { CreateDonorDTO } from './dto/create-donor.dto';
 import { UpdateDonorDTO } from './dto/update-donor.dto';
 

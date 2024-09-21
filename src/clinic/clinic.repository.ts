@@ -3,8 +3,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { UtilsService } from 'src/utils/utils.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { UtilsService } from '../utils/utils.service';
 import { CreateClinicDTO } from './dto/create-clinic.dto';
 import { UpdateClinicDTO } from './dto/update-clinic.dto';
 
@@ -45,19 +45,19 @@ export class ClinicRepository {
   }
 
   async findOne(id: string) {
-    const existClinic = await this.prisma.clinic.findUnique({ where: { id } });
+    const existsClinic = await this.prisma.clinic.findUnique({ where: { id } });
 
-    if (!existClinic) {
+    if (!existsClinic) {
       throw new NotFoundException('Clinic not found!');
     }
 
-    return existClinic;
+    return existsClinic;
   }
 
   async update(id: string, data: UpdateClinicDTO) {
-    const existClinic = await this.prisma.clinic.findUnique({ where: { id } });
+    const existsClinic = await this.prisma.clinic.findUnique({ where: { id } });
 
-    if (!existClinic) {
+    if (!existsClinic) {
       throw new NotFoundException('Clinic not found!');
     }
 
@@ -65,9 +65,9 @@ export class ClinicRepository {
   }
 
   async delete(id: string) {
-    const existClinic = await this.prisma.clinic.findUnique({ where: { id } });
+    const existsClinic = await this.prisma.clinic.findUnique({ where: { id } });
 
-    if (!existClinic) {
+    if (!existsClinic) {
       throw new NotFoundException('Clinic not found!');
     }
 

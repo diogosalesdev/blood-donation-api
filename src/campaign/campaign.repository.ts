@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateCampaignDTO } from './dto/create-campaign.dto';
 import { UpdateCampaignDTO } from './dto/update-campaign.dto';
@@ -15,15 +15,38 @@ export class CampaignRepository {
     return this.prisma.campaign.findMany();
   }
 
-  findOne(id: string) {
-    return this.prisma.campaign.findUnique({ where: { id } });
+  async findOne(id: string) {
+    const existsCampaign = await this.prisma.campaign.findUnique({
+      where: { id },
+    });
+
+    if (existsCampaign) {
+      throw new NotFoundException('Campaign not found!');
+    }
+
+    return existsCampaign;
   }
 
-  update(id: string, data: UpdateCampaignDTO) {
+  async update(id: string, data: UpdateCampaignDTO) {
+    const existsCampaign = await this.prisma.campaign.findUnique({
+      where: { id },
+    });
+
+    if (existsCampaign) {
+      throw new NotFoundException('Campaign not found!');
+    }
     return this.prisma.campaign.update({ where: { id }, data });
   }
 
-  delete(id: string) {
+  async delete(id: string) {
+    const existsCampaign = await this.prisma.campaign.findUnique({
+      where: { id },
+    });
+
+    if (existsCampaign) {
+      throw new NotFoundException('Campaign not found!');
+    }
+
     return this.prisma.campaign.delete({ where: { id } });
   }
 }
