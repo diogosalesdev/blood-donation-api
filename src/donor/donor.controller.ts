@@ -6,14 +6,23 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { CurrentUser } from '../auth/current-user-decorator';
 import { DonorService } from './donor.service';
 import { CreateDonorDTO } from './dto/create-donor.dto';
 import { UpdateDonorDTO } from './dto/update-donor.dto';
 
 @ApiTags('Donors')
 @Controller('donors')
+@UseGuards(AuthGuard('jwt'))
 export class DonorController {
   constructor(private readonly donorService: DonorService) {}
 
@@ -23,11 +32,12 @@ export class DonorController {
     status: 201,
     description: 'Create a new donor',
   })
-  create(@Body() createDonorDTO: CreateDonorDTO) {
+  create(@CurrentUser() @Body() createDonorDTO: CreateDonorDTO) {
     return this.donorService.create(createDonorDTO);
   }
 
   @Get()
+  @ApiBearerAuth('Token')
   @ApiOperation({ summary: 'Get all donors' })
   @ApiResponse({
     status: 200,
