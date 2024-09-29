@@ -15,21 +15,21 @@ services:
     networks:
       - blood-donation-net
     
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: blood_donation_api    
-    ports:
-      - "${APP_PORT}:3000"
-    environment:
-      DATABASE_URL: ${DATABASE_URL}
-    volumes:
-      - .:/app
-    depends_on:
-      - postgres
-    networks:
-      - blood-donation-net
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: blood_donation_api    
+  #   ports:
+  #     - "${APP_PORT}:3000"
+  #   environment:
+  #     DATABASE_URL: ${DATABASE_URL}
+  #   volumes:
+  #     - .:/app
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - blood-donation-net
     
 volumes:
   postgres_data:

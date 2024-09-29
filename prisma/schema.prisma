@@ -17,14 +17,18 @@ model Donor {
   id        String   @id @default(uuid())
   name      String
   email     String   @unique
-  userId    String?  @unique
-  user      User?    @relation(fields: [userId], references: [id])
+  password  String
+  role      Role     @default(USER)
   phone     String
   cpf       String   @unique
   bloodType String
+  cep       String
+  city      String
+  state     String
   address   String
   available Boolean  @default(true)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
 
   campaignId String?
   campaign   Campaign? @relation(fields: [campaignId], references: [id])
@@ -35,13 +39,16 @@ model Donor {
 model Clinic {
   id        String   @id @default(uuid())
   name      String
-  address   String
   email     String   @unique
-  userId    String?  @unique
-  user      User?    @relation(fields: [userId], references: [id])
+  password  String
+  role      Role     @default(CLINIC)
   phone     String
+  cep       String
+  city      String
+  state     String
+  address   String
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @updatedAt()
 
   Campaign Campaign[]
 
@@ -54,8 +61,12 @@ model Campaign {
   description String
   startDate   DateTime
   endDate     DateTime
-  location    String
+  cep         String
+  city        String
+  state       String
+  region      String
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   Donor Donor[]
 
@@ -63,19 +74,6 @@ model Campaign {
   Clinic   Clinic @relation(fields: [clinicId], references: [id])
 
   @@map("campaigns")
-}
-
-model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  role      Role
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Donor     Donor?
-  Clinic    Clinic?
-
-  @@map("users")
 }
 
 enum Role {

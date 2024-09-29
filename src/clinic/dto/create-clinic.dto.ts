@@ -8,23 +8,7 @@ export class CreateClinicDTO {
   })
   @IsString()
   @IsNotEmpty()
-  name: string;
-
-  @ApiProperty({
-    description: 'Endereço da c;ínica',
-    example: 'rua Doutor José de Brito, n1200',
-  })
-  @IsString()
-  @IsNotEmpty()
-  address: string;
-
-  @ApiProperty({
-    description: 'Número de telefone da clínica',
-    example: '81999999999',
-  })
-  @IsString()
-  @IsNotEmpty()
-  phone: string;
+  name!: string;
 
   @ApiProperty({
     description: 'Email da clínica',
@@ -32,5 +16,53 @@ export class CreateClinicDTO {
   })
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  email!: string;
+
+  @ApiProperty({
+    description: 'Senha da clínica',
+    example: 'senha12345',
+  })
+  @IsString()
+  @IsNotEmpty()
+  password!: string;
+
+  @ApiProperty({
+    description: 'Número de telefone da clínica',
+    example: '81999999999',
+  })
+  @IsString()
+  @IsNotEmpty()
+  phone!: string;
+
+  @ApiProperty({
+    description: 'CEP da clínica',
+    example: '52340080',
+  })
+  @IsEmail()
+  @IsNotEmpty()
+  cep!: string;
+
+  @ApiProperty({
+    description: 'Cidade da clínica',
+    example: 'Olinda',
+  })
+  @IsEmail()
+  @IsNotEmpty()
+  city!: string;
+
+  @ApiProperty({
+    description: 'Estado da clínica',
+    example: 'Pernambuco',
+  })
+  @IsEmail()
+  @IsNotEmpty()
+  state!: string;
+
+  @ApiProperty({
+    description: 'Endereço da c;ínica',
+    example: 'rua Doutor José de Brito, n1200',
+  })
+  @IsString()
+  @IsNotEmpty()
+  address!: string;
 }

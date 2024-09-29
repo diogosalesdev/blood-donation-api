@@ -8,16 +8,14 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import {
   ApiBearerAuth,
   ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { Role } from '@prisma/client';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { Roles } from '../auth/roles.decorator';
-import { RolesGuard } from '../auth/roles.guard';
+import { CurrentUser } from '../auth/current-user-decorator';
 import { DonorService } from './donor.service';
 import { CreateDonorDTO } from './dto/create-donor.dto';
 import { UpdateDonorDTO } from './dto/update-donor.dto';
@@ -36,12 +34,12 @@ export class DonorController {
     status: 201,
     description: 'Create a new donor',
   })
-  create(@Body() createDonorDTO: CreateDonorDTO) {
+  create(@CurrentUser() @Body() createDonorDTO: CreateDonorDTO) {
     return this.donorService.create(createDonorDTO);
   }
 
   @Get()
-  @Roles(Role.USER, Role.ADMIN)
+  @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Get all donors' })
   @ApiResponse({
     status: 200,
@@ -52,7 +50,7 @@ export class DonorController {
   }
 
   @Get(':id')
-  @Roles(Role.USER, Role.ADMIN)
+  @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Get a donor by ID' })
   @ApiResponse({
     status: 200,
@@ -63,7 +61,7 @@ export class DonorController {
   }
 
   @Patch(':id')
-  @Roles(Role.USER, Role.ADMIN)
+  @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Update a donor by ID' })
   @ApiResponse({
     status: 200,
@@ -74,7 +72,7 @@ export class DonorController {
   }
 
   @Delete(':id')
-  @Roles(Role.USER, Role.ADMIN)
+  @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Remove a donor' })
   @ApiResponse({
     status: 200,

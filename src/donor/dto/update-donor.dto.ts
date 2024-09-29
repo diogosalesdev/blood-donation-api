@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString, Matches } from 'class-validator';
+import { IsEmail, IsOptional, IsString, Matches } from 'class-validator';
 
 export class UpdateDonorDTO {
   @ApiProperty({
@@ -7,49 +7,81 @@ export class UpdateDonorDTO {
     example: 'Diogo Sales',
   })
   @IsString()
-  @IsNotEmpty()
-  name: string;
+  @IsOptional()
+  name?: string;
 
   @ApiProperty({
     description: 'Email do doador',
     example: 'diogosales@swagger.com',
   })
   @IsEmail()
-  @IsNotEmpty()
-  email: string;
+  @IsOptional()
+  email?: string;
+
+  @ApiProperty({
+    description: 'Senha do doador',
+    example: 'senha12345',
+  })
+  @IsEmail()
+  @IsOptional()
+  password?: string;
 
   @ApiProperty({
     description: 'Número de telefone do doador',
     example: '81999999999',
   })
   @IsString()
-  @IsNotEmpty()
-  phone: string;
+  @IsOptional()
+  phone?: string;
 
   @ApiProperty({
     description: 'Número do cpf do doador',
     example: '11111111111',
   })
   @IsString()
-  @IsNotEmpty()
-  cpf: string;
+  @IsOptional()
+  cpf?: string;
 
   @ApiProperty({
     description: 'Tipo sanguíneo do Doador',
     example: 'O-',
   })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   @Matches(/^(A|B|AB|O)[+-]$/, {
     message: 'O tipo sanguíneo deve ser A+, A-, B+, B-, AB+, AB-, O+ ou O-',
   })
-  bloodType: string;
+  bloodType?: string;
+
+  @ApiProperty({
+    description: 'CEP do Doador',
+    example: '52780080',
+  })
+  @IsString()
+  @IsOptional()
+  cep?: string;
+
+  @ApiProperty({
+    description: 'Cidade do Doador',
+    example: 'Recife',
+  })
+  @IsString()
+  @IsOptional()
+  city?: string;
+
+  @ApiProperty({
+    description: 'Estado do Doador',
+    example: 'Pernambuco',
+  })
+  @IsString()
+  @IsOptional()
+  state?: string;
 
   @ApiProperty({
     description: 'Endereço do Doador',
-    example: 'rua da Concordia, 134',
+    example: 'rua da Concordia, 170',
   })
   @IsString()
-  @IsNotEmpty()
-  address: string;
+  @IsOptional()
+  address?: string;
 }
