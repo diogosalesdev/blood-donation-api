@@ -21,8 +21,8 @@ import { CreateDonorDTO } from './dto/create-donor.dto';
 import { UpdateDonorDTO } from './dto/update-donor.dto';
 
 @ApiTags('Donors')
+@ApiBearerAuth()
 @Controller('donors')
-@UseGuards(AuthGuard('jwt'))
 export class DonorController {
   constructor(private readonly donorService: DonorService) {}
 
@@ -37,6 +37,7 @@ export class DonorController {
   }
 
   @Get()
+  @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth('Token')
   @ApiOperation({ summary: 'Get all donors' })
   @ApiResponse({

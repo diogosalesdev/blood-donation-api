@@ -19,9 +19,11 @@ async function bootstrap() {
       'API for managing blood donation campaigns, donors, and clinics',
     )
     .setVersion('1.0')
+    .addBearerAuth()
     .addTag('Campaigns')
     .addTag('Donors')
     .addTag('Clinics')
+    .addTag('Login')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
