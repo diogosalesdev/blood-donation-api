@@ -12,9 +12,15 @@ export class DonorRepository {
   ) {}
 
   async create(data: CreateDonorDTO) {
-    const { email, password } = data;
+    const { email, password, cpf } = data;
 
     const user = await this.prisma.donor.findUnique({ where: { email } });
+
+    const existsCPF = await this.prisma.donor.findUnique({ where: { cpf } });
+
+    if (existsCPF) {
+      throw new ConflictException('Este CPF já existe');
+    }
 
     if (user) {
       throw new ConflictException('Este email já foi cadastrado!');

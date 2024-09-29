@@ -38,7 +38,6 @@ export class DonorController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  @ApiBearerAuth('Token')
   @ApiOperation({ summary: 'Get all donors' })
   @ApiResponse({
     status: 200,
@@ -49,6 +48,7 @@ export class DonorController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Get a donor by ID' })
   @ApiResponse({
     status: 200,
@@ -59,6 +59,7 @@ export class DonorController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Update a donor by ID' })
   @ApiResponse({
     status: 200,
@@ -69,6 +70,7 @@ export class DonorController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Remove a donor' })
   @ApiResponse({
     status: 200,
