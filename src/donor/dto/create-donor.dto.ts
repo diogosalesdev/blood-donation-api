@@ -8,7 +8,7 @@ export class CreateDonorDTO {
   })
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name!: string;
 
   @ApiProperty({
     description: 'Email do doador',
@@ -16,7 +16,14 @@ export class CreateDonorDTO {
   })
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  email!: string;
+
+  @ApiProperty({
+    description: 'Senha do doador',
+    example: 'senha12345',
+  })
+  @IsNotEmpty()
+  password!: string;
 
   @ApiProperty({
     description: 'Número de telefone do doador',
@@ -24,7 +31,7 @@ export class CreateDonorDTO {
   })
   @IsString()
   @IsNotEmpty()
-  phone: string;
+  phone!: string;
 
   @ApiProperty({
     description: 'Número do cpf do doador',
@@ -32,7 +39,7 @@ export class CreateDonorDTO {
   })
   @IsString()
   @IsNotEmpty()
-  cpf: string;
+  cpf!: string;
 
   @ApiProperty({
     description: 'Tipo sanguíneo do Doador',
@@ -43,13 +50,37 @@ export class CreateDonorDTO {
   @Matches(/^(A|B|AB|O)[+-]$/, {
     message: 'O tipo sanguíneo deve ser A+, A-, B+, B-, AB+, AB-, O+ ou O-',
   })
-  bloodType: string;
+  bloodType!: string;
 
   @ApiProperty({
-    description: 'Endereço do Doador',
-    example: 'rua da Concordia, 134',
+    description: 'CEP do Doador',
+    example: '52780080',
   })
   @IsString()
   @IsNotEmpty()
-  address: string;
+  cep!: string;
+
+  @ApiProperty({
+    description: 'Cidade do Doador',
+    example: 'Recife',
+  })
+  @IsString()
+  @IsNotEmpty()
+  city!: string;
+
+  @ApiProperty({
+    description: 'Estado do Doador',
+    example: 'Pernambuco',
+  })
+  @IsString()
+  @IsNotEmpty()
+  state!: string;
+
+  @ApiProperty({
+    description: 'Endereço do Doador',
+    example: 'rua da Concordia, 170',
+  })
+  @IsString()
+  @IsNotEmpty()
+  address!: string;
 }

@@ -7,7 +7,13 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import {
+  ApiOperation,
+  ApiResponse,
+  ApiTags
+} from '@nestjs/swagger';
+import { CurrentUser } from '../auth/current-user-decorator';
 import { DonorService } from './donor.service';
 import { CreateDonorDTO } from './dto/create-donor.dto';
 import { UpdateDonorDTO } from './dto/update-donor.dto';
@@ -23,11 +29,12 @@ export class DonorController {
     status: 201,
     description: 'Create a new donor',
   })
-  create(@Body() createDonorDTO: CreateDonorDTO) {
+  create(@CurrentUser() @Body() createDonorDTO: CreateDonorDTO) {
     return this.donorService.create(createDonorDTO);
   }
 
   @Get()
+  @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Get all donors' })
   @ApiResponse({
     status: 200,
@@ -38,6 +45,7 @@ export class DonorController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Get a donor by ID' })
   @ApiResponse({
     status: 200,
@@ -48,6 +56,7 @@ export class DonorController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Update a donor by ID' })
   @ApiResponse({
     status: 200,
@@ -58,6 +67,7 @@ export class DonorController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Remove a donor' })
   @ApiResponse({
     status: 200,

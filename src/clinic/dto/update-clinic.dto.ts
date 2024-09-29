@@ -11,12 +11,20 @@ export class UpdateClinicDTO {
   name?: string;
 
   @ApiProperty({
-    description: 'Endereço da c;ínica',
-    example: 'rua Doutor José de Brito, n1200',
+    description: 'Email da clínica',
+    example: 'hemope@swagger.com',
+  })
+  @IsEmail()
+  @IsNotEmpty()
+  email?: string;
+
+  @ApiProperty({
+    description: 'Senha da clínica',
+    example: 'senha12345',
   })
   @IsString()
   @IsNotEmpty()
-  address?: string;
+  password?: string;
 
   @ApiProperty({
     description: 'Número de telefone da clínica',
@@ -27,10 +35,34 @@ export class UpdateClinicDTO {
   phone?: string;
 
   @ApiProperty({
-    description: 'Email da clínica',
-    example: 'hemope@swagger.com',
+    description: 'CEP da clínica',
+    example: '52340080',
   })
   @IsEmail()
   @IsNotEmpty()
-  email?: string;
+  cep?: string;
+
+  @ApiProperty({
+    description: 'Cidade da clínica',
+    example: 'Olinda',
+  })
+  @IsEmail()
+  @IsNotEmpty()
+  city?: string;
+
+  @ApiProperty({
+    description: 'Estado da clínica',
+    example: 'Pernambuco',
+  })
+  @IsEmail()
+  @IsNotEmpty()
+  state?: string;
+
+  @ApiProperty({
+    description: 'Endereço da c;ínica',
+    example: 'rua Doutor José de Brito, n1200',
+  })
+  @IsString()
+  @IsNotEmpty()
+  address?: string;
 }

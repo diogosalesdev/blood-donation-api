@@ -8,7 +8,7 @@ export class CreateCampaignDTO {
   })
   @IsString()
   @IsNotEmpty()
-  title: string;
+  title!: string;
 
   @ApiProperty({
     description: 'Descrição da campanha',
@@ -16,21 +16,45 @@ export class CreateCampaignDTO {
   })
   @IsString()
   @IsNotEmpty()
-  description: string;
+  description!: string;
 
   @ApiProperty({
     description: 'Data de início da campanha',
     example: '06-01-2025',
   })
   @IsDateString()
-  startDate: string;
+  startDate!: string;
 
   @ApiProperty({
     description: 'Data de encerramento da campanha',
     example: '20-02-2025',
   })
   @IsDateString()
-  endDate: string;
+  endDate!: string;
+
+  @ApiProperty({
+    description: 'CEP central da região da campanha',
+    example: '52340080',
+  })
+  @IsString()
+  @IsNotEmpty()
+  cep!: string;
+
+  @ApiProperty({
+    description: 'Cidade central da campanha',
+    example: 'Jaboatão',
+  })
+  @IsString()
+  @IsNotEmpty()
+  city!: string;
+
+  @ApiProperty({
+    description: 'Estado da campanha',
+    example: 'Pernambuco',
+  })
+  @IsString()
+  @IsNotEmpty()
+  state!: string;
 
   @ApiProperty({
     description: 'Local/Região de alcance da campanha',
@@ -38,7 +62,7 @@ export class CreateCampaignDTO {
   })
   @IsString()
   @IsNotEmpty()
-  location: string;
+  region!: string;
 
   @ApiProperty({
     description: 'Id da clínica que criou a campanha',
@@ -46,5 +70,5 @@ export class CreateCampaignDTO {
   })
   @IsString()
   @IsNotEmpty()
-  clinicId: string;
+  clinicId!: string;
 }
