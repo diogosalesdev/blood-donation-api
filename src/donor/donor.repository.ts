@@ -87,4 +87,16 @@ export class DonorRepository {
       },
     });
   }
+
+  donationAvaliable(data: UpdateDonorDTO) {
+    const { email } = data;
+
+    return this.prisma.donor.update({
+      where: { email },
+      data: {
+        ...data,
+        available: true,
+      },
+    });
+  }
 }
