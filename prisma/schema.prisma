@@ -14,21 +14,23 @@ datasource db {
 }
 
 model Donor {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  password  String
-  role      Role     @default(USER)
-  phone     String
-  cpf       String   @unique
-  bloodType String
-  cep       String
-  city      String
-  state     String
-  address   String
-  available Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt()
+  id                  String    @id @default(uuid())
+  name                String
+  email               String    @unique
+  password            String
+  role                Role      @default(USER)
+  phone               String
+  cpf                 String    @unique
+  bloodType           String
+  cep                 String
+  city                String
+  state               String
+  address             String
+  available           Boolean   @default(true)
+  lastDonorDate       DateTime?
+  unblockDonationDate DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt()
 
   campaignId String?
   campaign   Campaign? @relation(fields: [campaignId], references: [id])
