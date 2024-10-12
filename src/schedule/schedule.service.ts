@@ -21,6 +21,7 @@ export class ScheduleService {
 
       if (now.diff(lastDonation, 'day') >= 90) {
         await this.emailService.sendDonationReminder(donor.email, donor.name);
+        await this.donorService.donationAvailable(donor);
       }
     });
   }
