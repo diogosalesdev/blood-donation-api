@@ -35,4 +35,8 @@ export class DonorService {
   donationDone(data: DonationDoneDTO) {
     return this.donorRepository.donationDone(data);
   }
+
+  donationAvailable(data: UpdateDonorDTO) {
+    return this.donorRepository.donationAvaliable(data);
+  }
 }
