@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { DonorRepository } from './donor.repository';
 import { CreateDonorDTO } from './dto/create-donor.dto';
+import { DonationDoneDTO } from './dto/donationDone-donor.dto';
 import { UpdateDonorDTO } from './dto/update-donor.dto';
 
 @Injectable()
@@ -25,5 +26,13 @@ export class DonorService {
 
   delete(id: string) {
     return this.donorRepository.delete(id);
+  }
+
+  findAllEligibleForNotification() {
+    return this.donorRepository.findAllEligibleForNotification();
+  }
+
+  donationDone(data: DonationDoneDTO) {
+    return this.donorRepository.donationDone(data);
   }
 }

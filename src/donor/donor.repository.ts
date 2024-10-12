@@ -1,7 +1,13 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import * as dayjs from 'dayjs';
 import { PrismaService } from '../prisma/prisma.service';
 import { UtilsService } from '../utils/utils.service';
 import { CreateDonorDTO } from './dto/create-donor.dto';
+import { DonationDoneDTO } from './dto/donationDone-donor.dto';
 import { UpdateDonorDTO } from './dto/update-donor.dto';
 
 @Injectable()
@@ -50,5 +56,35 @@ export class DonorRepository {
 
   delete(id: string) {
     return this.prisma.donor.delete({ where: { id } });
+  }
+
+  async findAllEligibleForNotification() {
+    return this.prisma.donor.findMany({
+      where: {
+        lastDonorDate: {
+          not: null,
+        },
+        unblockDonationDate: null,
+      },
+    });
+  }
+
+  async donationDone(data: DonationDoneDTO) {
+    const { email } = data;
+
+    const user = await this.prisma.donor.findUnique({ where: { email } });
+
+    if (!user) {
+      throw new NotFoundException('Usuário não cadastrado!');
+    }
+
+    return this.prisma.donor.update({
+      where: { email },
+      data: {
+        ...data,
+        available: false,
+        lastDonorDate: dayjs().toString(),
+      },
+    });
   }
 }

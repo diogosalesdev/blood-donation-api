@@ -13,6 +13,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '../auth/current-user-decorator';
 import { DonorService } from './donor.service';
 import { CreateDonorDTO } from './dto/create-donor.dto';
+import { DonationDoneDTO } from './dto/donationDone-donor.dto';
 import { UpdateDonorDTO } from './dto/update-donor.dto';
 
 @ApiTags('Donors')
@@ -21,10 +22,10 @@ export class DonorController {
   constructor(private readonly donorService: DonorService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a new donor' })
+  @ApiOperation({ summary: 'Cadastra um(a) novo(a) doador(a)' })
   @ApiResponse({
     status: 201,
-    description: 'Create a new donor',
+    description: 'Cadastra um(a) novo(a) doador(a)',
   })
   create(@CurrentUser() @Body() createDonorDTO: CreateDonorDTO) {
     return this.donorService.create(createDonorDTO);
@@ -32,7 +33,7 @@ export class DonorController {
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  @ApiOperation({ summary: 'Get all donors' })
+  @ApiOperation({ summary: 'Lista todos os doadores' })
   @ApiResponse({
     status: 200,
     description: 'Get all donors',
@@ -43,7 +44,7 @@ export class DonorController {
 
   @Get(':id')
   @UseGuards(AuthGuard('jwt'))
-  @ApiOperation({ summary: 'Get a donor by ID' })
+  @ApiOperation({ summary: 'Busca um(a) doador(a) pelo id' })
   @ApiResponse({
     status: 200,
     description: 'Get a donor by ID',
@@ -54,7 +55,7 @@ export class DonorController {
 
   @Patch(':id')
   @UseGuards(AuthGuard('jwt'))
-  @ApiOperation({ summary: 'Update a donor by ID' })
+  @ApiOperation({ summary: 'Atualiza um(a) doador(a)' })
   @ApiResponse({
     status: 200,
     description: 'Update a donor by ID',
@@ -63,9 +64,20 @@ export class DonorController {
     return this.donorService.update(id, updateDonorDTO);
   }
 
+  @Patch()
+  @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Realiza a doação' })
+  @ApiResponse({
+    status: 200,
+    description: 'Do donation',
+  })
+  donationDone(@Body() donationDoneDTO: DonationDoneDTO) {
+    return this.donorService.donationDone(donationDoneDTO);
+  }
+
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
-  @ApiOperation({ summary: 'Remove a donor' })
+  @ApiOperation({ summary: 'Exclui um(a) doador(a)' })
   @ApiResponse({
     status: 200,
     description: 'Remove a donor',

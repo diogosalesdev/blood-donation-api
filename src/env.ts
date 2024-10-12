@@ -5,6 +5,8 @@ export const envSchema = z.object({
   JWT_PRIVATE_KEY: z.string(),
   JWT_PUBLIC_KEY: z.string(),
   PORT: z.coerce.number().optional().default(3000),
+  SENDGRID_API_KEY: z.string(),
+  EMAIL_FROM: z.string(),
 });
 
 export type Env = z.infer<typeof envSchema>;
