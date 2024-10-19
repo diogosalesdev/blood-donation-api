@@ -38,7 +38,7 @@ export class UpdateClinicDTO {
     description: 'CEP da clínica',
     example: '52340080',
   })
-  @IsEmail()
+  @IsString()
   @IsNotEmpty()
   cep?: string;
 
@@ -46,7 +46,7 @@ export class UpdateClinicDTO {
     description: 'Cidade da clínica',
     example: 'Olinda',
   })
-  @IsEmail()
+  @IsString()
   @IsNotEmpty()
   city?: string;
 
@@ -54,7 +54,7 @@ export class UpdateClinicDTO {
     description: 'Estado da clínica',
     example: 'Pernambuco',
   })
-  @IsEmail()
+  @IsString()
   @IsNotEmpty()
   state?: string;
 
