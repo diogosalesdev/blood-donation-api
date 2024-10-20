@@ -32,8 +32,8 @@ export class DonorService {
     return this.donorRepository.findAllEligibleForNotification();
   }
 
-  donationDone(data: DonationDoneDTO) {
-    return this.donorRepository.donationDone(data);
+  donationDone(id: string, data: DonationDoneDTO) {
+    return this.donorRepository.donationDone(id, data);
   }
 
   donationAvailable(data: UpdateDonorDTO) {
