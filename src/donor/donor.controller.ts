@@ -6,9 +6,7 @@ import {
   Param,
   Patch,
   Post,
-  UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '../auth/current-user-decorator';
 import { DonorService } from './donor.service';
@@ -32,7 +30,7 @@ export class DonorController {
   }
 
   @Get()
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Lista todos os doadores' })
   @ApiResponse({
     status: 200,
@@ -43,7 +41,7 @@ export class DonorController {
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Busca um(a) doador(a) pelo id' })
   @ApiResponse({
     status: 200,
@@ -54,7 +52,7 @@ export class DonorController {
   }
 
   @Patch(':id')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Atualiza um(a) doador(a)' })
   @ApiResponse({
     status: 200,
@@ -64,19 +62,22 @@ export class DonorController {
     return this.donorService.update(id, updateDonorDTO);
   }
 
-  @Patch()
-  @UseGuards(AuthGuard('jwt'))
+  @Patch(':id')
+  // @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Realiza a doação' })
   @ApiResponse({
     status: 200,
     description: 'Do donation',
   })
-  donationDone(@Body() donationDoneDTO: DonationDoneDTO) {
-    return this.donorService.donationDone(donationDoneDTO);
+  donationDone(
+    @Param('id') id: string,
+    @Body() donationDoneDTO: DonationDoneDTO,
+  ) {
+    return this.donorService.donationDone(id, donationDoneDTO);
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Exclui um(a) doador(a)' })
   @ApiResponse({
     status: 200,

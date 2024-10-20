@@ -69,8 +69,13 @@ export class DonorRepository {
     });
   }
 
-  async donationDone(data: DonationDoneDTO) {
-    const { email } = data;
+  async donationDone(id: string, data: DonationDoneDTO) {
+    const { email, lastDonorDate } = data;
+
+    const formattedLastDonorDate = dayjs(
+      lastDonorDate,
+      'DD/MM/YYYY',
+    ).toISOString();
 
     const user = await this.prisma.donor.findUnique({ where: { email } });
 
@@ -78,12 +83,14 @@ export class DonorRepository {
       throw new NotFoundException('Usuário não cadastrado!');
     }
 
+    console.log(formattedLastDonorDate);
+
     return this.prisma.donor.update({
-      where: { email },
+      where: { id },
       data: {
         ...data,
         available: false,
-        lastDonorDate: dayjs().toString(),
+        lastDonorDate: formattedLastDonorDate,
       },
     });
   }
