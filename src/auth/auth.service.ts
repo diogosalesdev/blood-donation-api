@@ -14,7 +14,9 @@ export class AuthService {
   async authenticate(body: LoginSessionDTO) {
     const { email, password } = body;
 
-    const user = await this.prisma.donor.findUnique({ where: { email } });
+    const donor = await this.prisma.donor.findUnique({ where: { email } });
+    const clinic = await this.prisma.clinic.findUnique({ where: { email } });
+    const user = donor ? donor : clinic;
 
     if (!user) {
       throw new UnauthorizedException('Credinciais não encontradas');
