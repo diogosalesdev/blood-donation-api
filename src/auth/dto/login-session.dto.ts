@@ -12,4 +12,10 @@ export class LoginSessionDTO {
     example: 'senha12345',
   })
   password!: string;
+
+  @ApiProperty({
+    description: 'Se é doador ou clinica',
+    example: 'true',
+  })
+  isDonor!: boolean;
 }
