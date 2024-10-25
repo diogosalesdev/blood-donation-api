@@ -3,8 +3,6 @@ import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { LoginSessionDTO } from './dto/login-session.dto';
-import { CreateDonorDTO } from 'src/donor/dto/create-donor.dto';
-import { CreateClinicDTO } from 'src/clinic/dto/create-clinic.dto';
 @Injectable()
 export class AuthService {
   constructor(
