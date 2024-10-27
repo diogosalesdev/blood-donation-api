@@ -1,85 +1,167 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Blood Donation API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A **Blood Donation API** é uma plataforma que permite que clínicas de doação de sangue gerenciem campanhas de doação e notifiquem doadores. Os doadores podem se cadastrar para serem notificados sobre campanhas, e as clínicas podem organizar campanhas e gerenciar as inscrições.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Índice
 
-## Description
+- [Blood Donation API](#blood-donation-api)
+  - [Índice](#índice)
+  - [Tecnologias Utilizadas](#tecnologias-utilizadas)
+  - [Arquitetura e Padrões](#arquitetura-e-padrões)
+  - [Instalação Local](#instalação-local)
+  - [Configuração do Ambiente](#configuração-do-ambiente)
+  - [Executando o Projeto](#executando-o-projeto)
+  - [Endpoints](#endpoints)
+    - [Autenticação](#autenticação)
+    - [Doadores](#doadores)
+    - [Campanhas](#campanhas)
+    - [Notificações](#notificações)
+  - [Cron Jobs](#cron-jobs)
+  - [Testes](#testes)
+  - [Contribuição](#contribuição)
+  - [Licença](#licença)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Project setup
+## Tecnologias Utilizadas
 
-```bash
-$ npm install
-```
+Este projeto foi desenvolvido com as seguintes tecnologias:
 
-## Compile and run the project
+- **NestJS**: Framework Node.js para criação de APIs robustas e escaláveis.
+- **Prisma**: ORM para banco de dados PostgreSQL.
+- **PostgreSQL**: Banco de dados relacional.
+- **Docker**: Utilizado para a criação de um ambiente de desenvolvimento isolado.
+- **SendGrid**: Serviço de envio de e-mails para notificação de doadores.
+- **Swagger**: Documentação interativa da API.
+- **Dayjs**: Biblioteca para manipulação de datas.
 
-```bash
-# development
-$ npm run start
+---
 
-# watch mode
-$ npm run start:dev
+## Arquitetura e Padrões
 
-# production mode
-$ npm run start:prod
-```
+Esta API segue as melhores práticas de desenvolvimento, incluindo:
 
-## Run tests
+- **Padrão MVC**: Separação clara entre Modelos, Controladores e Serviços.
+- **Injeção de Dependências**: A arquitetura do NestJS permite uma estrutura modular e injeção de dependências limpa.
+- **Reposição de Regras de Negócio**: As regras de negócio são separadas dos controladores para maior clareza e reutilização.
+- **Testes**: São incluídos testes unitários e de integração.
+- **Documentação com Swagger**: Todos os endpoints estão documentados para fácil compreensão e testes.
 
-```bash
-# unit tests
-$ npm run test
+---
 
-# e2e tests
-$ npm run test:e2e
+## Instalação Local
 
-# test coverage
-$ npm run test:cov
-```
+1. Clone o repositório:
+    ```bash
+    git clone https://github.com/seu-usuario/blood-donation-api.git
+    cd blood-donation-api
+    ```
 
-## Resources
+2. Instale as dependências:
+    ```bash
+    npm install
+    ```
 
-Check out a few resources that may come in handy when working with NestJS:
+3. Inicie os serviços Docker para PostgreSQL e Prisma:
+    ```bash
+    docker-compose up -d
+    ```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+---
 
-## Support
+## Configuração do Ambiente
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+1. Crie um arquivo `.env` na raiz do projeto e adicione as seguintes variáveis de ambiente:
 
-## Stay in touch
+    ```plaintext
+    DATABASE_URL=postgresql://user:password@localhost:5432/blood_donation
+    SENDGRID_API_KEY=your-sendgrid-api-key
+    EMAIL_FROM=noreply@yourdomain.com
+    ```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+2. Configure o banco de dados Prisma executando as migrações:
 
-## License
+    ```bash
+    npx prisma migrate dev
+    ```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+---
+
+## Executando o Projeto
+
+1. Inicie o servidor de desenvolvimento NestJS:
+    ```bash
+    npm run start:dev
+    ```
+
+2. Acesse a documentação Swagger em [http://localhost:3000/api](http://localhost:3000/api).
+
+---
+
+## Endpoints
+
+### Autenticação
+
+- **POST** `/auth/register` - Cadastro de um novo usuário.
+- **POST** `/auth/login` - Login de um usuário.
+
+### Doadores
+
+- **POST** `/donors` - Criação de um novo doador.
+- **GET** `/donors/:id` - Obter informações de um doador específico.
+- **PUT** `/donors/:id` - Atualizar informações de um doador.
+- **DELETE** `/donors/:id` - Remover um doador.
+
+### Campanhas
+
+- **POST** `/campaigns` - Criação de uma nova campanha de doação.
+- **GET** `/campaigns` - Listar todas as campanhas.
+- **GET** `/campaigns/:id` - Obter detalhes de uma campanha específica.
+- **PUT** `/campaigns/:id` - Atualizar uma campanha.
+- **DELETE** `/campaigns/:id` - Remover uma campanha.
+
+### Notificações
+
+- **GET** `/notifications/donor/:id` - Enviar notificações por e-mail para um doador.
+
+> **Nota**: Consulte a documentação Swagger para detalhes completos sobre cada endpoint, incluindo parâmetros e formatos de resposta.
+
+---
+
+## Cron Jobs
+
+Esta API inclui um cron job diário que verifica quais doadores estão elegíveis para doar sangue novamente. Esse cron job é configurado para rodar às 00:00 e utiliza a biblioteca `@nestjs/schedule`.
+
+- **Critério de Notificação**: O cron job verifica se já passaram 90 dias desde a última doação registrada de um doador e, se sim, envia um e-mail de notificação.
+
+---
+
+## Testes
+
+1. Para executar os testes unitários:
+    ```bash
+    npm run test
+    ```
+
+2. Para executar os testes de integração:
+    ```bash
+    npm run test:e2e
+    ```
+
+---
+
+## Contribuição
+
+Contribuições são bem-vindas! Para contribuir, siga estes passos:
+
+1. Fork o projeto.
+2. Crie uma nova branch (`git checkout -b feature/nova-funcionalidade`).
+3. Commit suas mudanças (`git commit -m 'Adiciona nova funcionalidade'`).
+4. Faça push para a branch (`git push origin feature/nova-funcionalidade`).
+5. Abra um Pull Request.
+
+---
+
+## Licença
+
+Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.

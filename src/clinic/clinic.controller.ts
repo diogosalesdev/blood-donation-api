@@ -18,7 +18,7 @@ export class ClinicController {
   constructor(private readonly clinicService: ClinicService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a new clinic.' })
+  @ApiOperation({ summary: 'Cria uma nova clínica.' })
   @ApiResponse({
     status: 201,
     description: 'Clinic created successfuly.',
@@ -28,7 +28,7 @@ export class ClinicController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all clinics.' })
+  @ApiOperation({ summary: 'Lista todas as clínicas' })
   @ApiResponse({
     status: 200,
     description: 'List of cliinics retrieved successfuly.',
@@ -38,7 +38,7 @@ export class ClinicController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get a clinic details by ID' })
+  @ApiOperation({ summary: 'Busca uma clínica específica' })
   @ApiResponse({
     status: 200,
     description: 'Clinic details retrieved successfuly',
@@ -48,7 +48,7 @@ export class ClinicController {
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'Update a clinic by ID' })
+  @ApiOperation({ summary: 'Altera uma clínica específica' })
   @ApiResponse({
     status: 200,
     description: 'Update a clinic by ID',
@@ -58,7 +58,7 @@ export class ClinicController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Remove a clinic.' })
+  @ApiOperation({ summary: 'Remove uma clínica.' })
   @ApiResponse({
     status: 200,
     description: 'Remove a clinic',

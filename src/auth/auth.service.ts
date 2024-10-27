@@ -12,11 +12,11 @@ export class AuthService {
 
   async authenticate(body: LoginSessionDTO) {
     const { email, password, isDonor } = body;
-    
+
     let user;
-    if(isDonor){
-       user = await this.prisma.donor.findUnique({ where: { email } });
-    }else {
+    if (isDonor) {
+      user = await this.prisma.donor.findUnique({ where: { email } });
+    } else {
       user = await this.prisma.clinic.findUnique({ where: { email } });
     }
 
