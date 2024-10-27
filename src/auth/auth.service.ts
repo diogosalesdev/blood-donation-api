@@ -3,7 +3,6 @@ import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcryptjs';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { LoginSessionDTO } from './dto/login-session.dto';
-
 @Injectable()
 export class AuthService {
   constructor(
@@ -12,9 +11,14 @@ export class AuthService {
   ) {}
 
   async authenticate(body: LoginSessionDTO) {
-    const { email, password } = body;
+    const { email, password, isDonor } = body;
 
-    const user = await this.prisma.donor.findUnique({ where: { email } });
+    let user;
+    if (isDonor) {
+      user = await this.prisma.donor.findUnique({ where: { email } });
+    } else {
+      user = await this.prisma.clinic.findUnique({ where: { email } });
+    }
 
     if (!user) {
       throw new UnauthorizedException('Credinciais não encontradas');
