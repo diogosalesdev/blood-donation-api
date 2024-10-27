@@ -18,7 +18,7 @@ export class CampaignController {
   constructor(private readonly campaignService: CampaignService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create a new Campaign' })
+  @ApiOperation({ summary: 'Cria uma nova campanha' })
   @ApiResponse({
     status: 201,
     description: 'Campaign created successfully',
@@ -28,7 +28,7 @@ export class CampaignController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all campaigns' })
+  @ApiOperation({ summary: 'Lista todas as campanhas' })
   @ApiResponse({
     status: 200,
     description: 'List of campaigns retrieved successfully',
@@ -38,7 +38,7 @@ export class CampaignController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get campaign details by ID' })
+  @ApiOperation({ summary: 'Busca uma campanha pelo id' })
   @ApiResponse({
     status: 200,
     description: 'Campaign details retrieved successfuly',
@@ -47,8 +47,18 @@ export class CampaignController {
     return this.campaignService.findOne(id);
   }
 
+  @Get(':city')
+  @ApiOperation({ summary: 'Lista campanhas por cidade' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of campaigns retrieved successfully',
+  })
+  findCampaignByCity(@Param('city') city: string) {
+    return this.campaignService.findCampapaignByCity(city);
+  }
+
   @Patch(':id')
-  @ApiOperation({ summary: 'Update a campaign by ID' })
+  @ApiOperation({ summary: 'Altera uma camapnha específica' })
   @ApiResponse({
     status: 200,
     description: 'Campaign updated successfuly',
@@ -61,7 +71,7 @@ export class CampaignController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Delete a campaign by ID' })
+  @ApiOperation({ summary: 'Remove uma campanha' })
   @ApiResponse({
     status: 200,
     description: 'Campaign deleted successfuly',

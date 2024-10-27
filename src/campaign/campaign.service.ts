@@ -19,6 +19,10 @@ export class CampaignService {
     return this.campaignRepository.findOne(id);
   }
 
+  findCampapaignByCity(city: string) {
+    return this.campaignRepository.findCampaignByCity(city);
+  }
+
   update(id: string, data: UpdateCampaignDTO) {
     return this.campaignRepository.update(id, data);
   }

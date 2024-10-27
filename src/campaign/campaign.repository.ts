@@ -19,6 +19,10 @@ export class CampaignRepository {
     return this.prisma.campaign.findUnique({ where: { id } });
   }
 
+  findCampaignByCity(city: string) {
+    return this.prisma.campaign.findMany({ where: { city } });
+  }
+
   update(id: string, data: UpdateCampaignDTO) {
     return this.prisma.campaign.update({ where: { id }, data });
   }
