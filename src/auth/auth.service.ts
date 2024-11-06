@@ -34,9 +34,31 @@ export class AuthService {
       sub: user.id,
     });
 
+    if(user.cpf){
+      return {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        cpf: user.cpf,
+        phone: user.phone,
+        address: user.address,
+        city: user.city,
+        state: user.state,
+        cep: user.cep,
+        bloodType: user.bloodType,
+        access_token: accessToken,
+      };
+    }
+
     return {
       id: user.id,
       name: user.name,
+      email: user.email,
+      phone: user.phone,
+      address: user.address,
+      city: user.city,
+      state: user.state,
+      cep: user.cep,
       access_token: accessToken,
     };
   }
