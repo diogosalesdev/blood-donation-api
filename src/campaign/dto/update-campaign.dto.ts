@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsDateString, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class UpdateCampaignDTO {
   @ApiProperty({
@@ -7,7 +7,7 @@ export class UpdateCampaignDTO {
     example: 'Doando pro carnaval',
   })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   title?: string;
 
   @ApiProperty({
@@ -15,7 +15,7 @@ export class UpdateCampaignDTO {
     example: 'Camapnha de doação para obter estoque para o carnaval',
   })
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   description?: string;
 
   @ApiProperty({
@@ -23,6 +23,7 @@ export class UpdateCampaignDTO {
     example: '06-01-2025',
   })
   @IsDateString()
+  @IsOptional()
   startDate?: string;
 
   @ApiProperty({
@@ -30,6 +31,7 @@ export class UpdateCampaignDTO {
     example: '20-02-2025',
   })
   @IsDateString()
+  @IsOptional()
   endDate?: string;
 
   @ApiProperty({
