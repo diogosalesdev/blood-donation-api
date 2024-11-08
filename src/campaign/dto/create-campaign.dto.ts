@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsDateString, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateCampaignDTO {
   @ApiProperty({
@@ -71,4 +71,15 @@ export class CreateCampaignDTO {
   @IsString()
   @IsNotEmpty()
   clinicId!: string;
+
+  @ApiProperty({
+    description: 'Lista de IDs dos usuários que se inscreveram na campanha',
+    example: ['userId1', 'userId2'],
+    type: [String],
+    isArray: true,
+    required: false, 
+  })
+  @IsArray()
+  @IsOptional()
+  userIds?: string[]
 }
