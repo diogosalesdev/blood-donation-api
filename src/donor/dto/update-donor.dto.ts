@@ -84,4 +84,12 @@ export class UpdateDonorDTO {
   @IsString()
   @IsOptional()
   address?: string;
+
+  @ApiProperty({
+    description: 'Id da campanha',
+    example: '5311dc7a-8fc4-4fbf-9019-70236e8c8cf6',
+  })
+  @IsString()
+  @IsOptional()
+  campaignId?: string | null;
 }

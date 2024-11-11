@@ -34,6 +34,33 @@ export class ClinicRepository {
     return this.prisma.clinic.findMany();
   }
 
+  async findAllCampaignsAndUsers() {
+    return await this.prisma.clinic.findMany({
+      include: {
+        Campaign: {
+          include: {
+            Donor: true,
+          },
+        },
+      },
+    });
+  }
+
+  async findAllUsers(id: string) {
+    return await this.prisma.clinic.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        Campaign: {
+          include: {
+            Donor: true,
+          },
+        },
+      },
+    });
+  }
+
   findOne(id: string) {
     return this.prisma.clinic.findUnique({ where: { id } });
   }

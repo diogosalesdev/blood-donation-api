@@ -34,7 +34,7 @@ export class AuthService {
       sub: user.id,
     });
 
-    if(user.cpf){
+    if (user.cpf) {
       return {
         id: user.id,
         name: user.name,
