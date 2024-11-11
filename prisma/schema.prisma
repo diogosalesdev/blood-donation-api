@@ -14,23 +14,23 @@ datasource db {
 }
 
 model Donor {
-  id                  String    @id @default(uuid())
+  id                  String   @id @default(uuid())
   name                String
-  email               String    @unique
+  email               String   @unique
   password            String
-  role                Role      @default(USER)
+  role                Role     @default(USER)
   phone               String
-  cpf                 String    @unique
+  cpf                 String   @unique
   bloodType           String
   cep                 String
   city                String
   state               String
   address             String
-  available           Boolean   @default(true)
-  lastDonorDate       DateTime?
-  unblockDonationDate DateTime?
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @updatedAt()
+  available           Boolean  @default(true)
+  lastDonorDate       String?
+  unblockDonationDate String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt()
 
   campaignId String?
   campaign   Campaign? @relation(fields: [campaignId], references: [id])
@@ -61,8 +61,8 @@ model Campaign {
   id          String   @id @default(uuid())
   title       String
   description String
-  startDate   DateTime
-  endDate     DateTime
+  startDate   String
+  endDate     String
   cep         String
   city        String
   state       String

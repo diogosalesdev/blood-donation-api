@@ -37,6 +37,18 @@ export class ClinicController {
     return this.clinicService.findAll();
   }
 
+  @Get('all')
+  @ApiOperation({
+    summary: 'Lista todas as clínicas e suas campanhas e usuários',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'List of cliinics retrieved successfuly.',
+  })
+  findAllCampaignsAndUsers() {
+    return this.clinicService.findAllCampaignsAndUsers();
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Busca uma clínica específica' })
   @ApiResponse({
@@ -45,6 +57,18 @@ export class ClinicController {
   })
   findOne(@Param('id') id: string) {
     return this.clinicService.findOne(id);
+  }
+
+  @Get('all/:id')
+  @ApiOperation({
+    summary: 'Busca uma clínica específica e sesu usuários e campanhas',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Clinic details retrieved successfuly',
+  })
+  findAllUsers(@Param('id') id: string) {
+    return this.clinicService.findAllUsers(id);
   }
 
   @Patch(':id')

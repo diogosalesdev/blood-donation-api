@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateCampaignDTO {
   @ApiProperty({
@@ -22,14 +22,14 @@ export class CreateCampaignDTO {
     description: 'Data de início da campanha',
     example: '06-01-2025',
   })
-  @IsDateString()
+  @IsString()
   startDate!: string;
 
   @ApiProperty({
     description: 'Data de encerramento da campanha',
     example: '20-02-2025',
   })
-  @IsDateString()
+  @IsString()
   endDate!: string;
 
   @ApiProperty({
@@ -71,4 +71,15 @@ export class CreateCampaignDTO {
   @IsString()
   @IsNotEmpty()
   clinicId!: string;
+
+  @ApiProperty({
+    description: 'Lista de IDs dos usuários que se inscreveram na campanha',
+    example: ['userId1', 'userId2'],
+    type: [String],
+    isArray: true,
+    required: false,
+  })
+  @IsArray()
+  @IsOptional()
+  userIds?: string[];
 }

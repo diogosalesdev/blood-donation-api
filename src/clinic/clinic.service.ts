@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ClinicRepository } from './clinic.rpository';
+import { ClinicRepository } from './clinic.repository';
 import { CreateClinicDTO } from './dto/create-clinic.dto';
 import { UpdateClinicDTO } from './dto/update-clinic.dto';
 
@@ -25,5 +25,13 @@ export class ClinicService {
 
   delete(id: string) {
     return this.clinicRepository.delete(id);
+  }
+
+  findAllCampaignsAndUsers() {
+    return this.clinicRepository.findAllCampaignsAndUsers();
+  }
+
+  findAllUsers(id: string) {
+    return this.clinicRepository.findAllUsers(id);
   }
 }

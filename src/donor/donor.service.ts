@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DonorRepository } from './donor.repository';
 import { CreateDonorDTO } from './dto/create-donor.dto';
-import { DonationDoneDTO } from './dto/donationDone-donor.dto';
 import { UpdateDonorDTO } from './dto/update-donor.dto';
 
 @Injectable()
@@ -32,11 +31,23 @@ export class DonorService {
     return this.donorRepository.findAllEligibleForNotification();
   }
 
-  donationDone(id: string, data: DonationDoneDTO) {
-    return this.donorRepository.donationDone(id, data);
+  donationDone(id: string) {
+    return this.donorRepository.donationDone(id);
   }
 
   donationAvailable(data: UpdateDonorDTO) {
     return this.donorRepository.donationAvaliable(data);
+  }
+
+  findWithCampaignsAndClinics() {
+    return this.donorRepository.findWithCampaignsAndClinics();
+  }
+
+  findWithCapaignsAndClinicsById(id: string) {
+    return this.donorRepository.findWithCapaignsAndClinicsById(id);
+  }
+
+  registerInCampaign(id: string, campaignId: string, data: UpdateDonorDTO) {
+    return this.donorRepository.registerInCampaign(id, campaignId, data);
   }
 }
