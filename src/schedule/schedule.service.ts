@@ -11,7 +11,7 @@ export class ScheduleService {
     private readonly emailService: EmailService,
   ) {}
 
-  @Cron(CronExpression.EVERY_DAY_AT_1AM)
+  @Cron(CronExpression.EVERY_DAY_AT_1PM)
   async handleCron() {
     const donors = await this.donorService.findAllEligibleForNotification();
 

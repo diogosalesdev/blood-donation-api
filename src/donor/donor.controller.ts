@@ -11,7 +11,6 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '../auth/current-user-decorator';
 import { DonorService } from './donor.service';
 import { CreateDonorDTO } from './dto/create-donor.dto';
-import { DonationDoneDTO } from './dto/donationDone-donor.dto';
 import { UpdateDonorDTO } from './dto/update-donor.dto';
 
 @ApiTags('Donors')
@@ -40,6 +39,18 @@ export class DonorController {
     return this.donorService.findAll();
   }
 
+  @Get('all')
+  @ApiOperation({
+    summary: 'Lista todos os doadores suas campanhas registradas e clinicas',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'All donors listed',
+  })
+  findWithCampaignsAndClinics() {
+    return this.donorService.findWithCampaignsAndClinics();
+  }
+
   @Get(':id')
   // @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Busca um(a) doador(a) pelo id' })
@@ -49,6 +60,19 @@ export class DonorController {
   })
   findOne(@Param('id') id: string) {
     return this.donorService.findOne(id);
+  }
+
+  @Get('all/:id')
+  // @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({
+    summary: 'Busca um(a) doador(a) pelo id, sua campanha e respectiva clínica',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Donor listed',
+  })
+  findWithCapaignsAndClinicsById(@Param('id') id: string) {
+    return this.donorService.findWithCapaignsAndClinicsById(id);
   }
 
   @Patch(':id')
@@ -62,18 +86,30 @@ export class DonorController {
     return this.donorService.update(id, updateDonorDTO);
   }
 
-  @Patch(':id')
+  @Patch('register/:id')
+  // @UseGuards(AuthGuard('jwt'))
+  @ApiOperation({ summary: 'Se registra em uma campanha' })
+  @ApiResponse({
+    status: 200,
+    description: 'Register done successfuly!',
+  })
+  registerInCampaign(
+    @Param('id') id: string,
+    @Param('campaignId') campaignId: string,
+    @Body() updateDonorDTO: UpdateDonorDTO,
+  ) {
+    return this.donorService.registerInCampaign(id, campaignId, updateDonorDTO);
+  }
+
+  @Patch('donation/:id')
   // @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Realiza a doação' })
   @ApiResponse({
     status: 200,
     description: 'Do donation',
   })
-  donationDone(
-    @Param('id') id: string,
-    @Body() donationDoneDTO: DonationDoneDTO,
-  ) {
-    return this.donorService.donationDone(id, donationDoneDTO);
+  donationDone(@Param('id') id: string) {
+    return this.donorService.donationDone(id);
   }
 
   @Delete(':id')

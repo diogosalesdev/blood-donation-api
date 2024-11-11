@@ -3,7 +3,7 @@ import { UtilsModule } from 'src/utils/utils.module';
 import { UtilsService } from 'src/utils/utils.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { ClinicController } from './clinic.controller';
-import { ClinicRepository } from './clinic.rpository';
+import { ClinicRepository } from './clinic.repository';
 import { ClinicService } from './clinic.service';
 
 @Module({
