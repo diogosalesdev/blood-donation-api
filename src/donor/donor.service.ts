@@ -31,12 +31,12 @@ export class DonorService {
     return this.donorRepository.findAllEligibleForNotification();
   }
 
-  donationDone(id: string) {
-    return this.donorRepository.donationDone(id);
+  donationDone(id: string, campaignId: string) {
+    return this.donorRepository.donationDone(id, campaignId);
   }
 
-  donationAvailable(data: UpdateDonorDTO) {
-    return this.donorRepository.donationAvaliable(data);
+  donationAvailable(id: string) {
+    return this.donorRepository.donationAvaliable(id);
   }
 
   findWithCampaignsAndClinics() {
@@ -47,7 +47,7 @@ export class DonorService {
     return this.donorRepository.findWithCapaignsAndClinicsById(id);
   }
 
-  registerInCampaign(id: string, campaignId: string, data: UpdateDonorDTO) {
-    return this.donorRepository.registerInCampaign(id, campaignId, data);
+  registerInCampaign(id: string, campaignId: string) {
+    return this.donorRepository.registerInCampaign(id, campaignId);
   }
 }

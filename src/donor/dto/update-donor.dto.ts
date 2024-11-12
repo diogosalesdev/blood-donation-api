@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsOptional, IsString, Matches } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsOptional,
+  IsString,
+  Matches,
+} from 'class-validator';
 
 export class UpdateDonorDTO {
   @ApiProperty({
@@ -84,6 +90,30 @@ export class UpdateDonorDTO {
   @IsString()
   @IsOptional()
   address?: string;
+
+  @ApiProperty({
+    description: 'Data da última doação',
+    example: '30/04/2024',
+  })
+  @IsString()
+  @IsOptional()
+  lastDonorDate?: string;
+
+  @ApiProperty({
+    description: 'Data para póxima doação',
+    example: '30/04/2024',
+  })
+  @IsString()
+  @IsOptional()
+  unblockDonationDate?: string;
+
+  @ApiProperty({
+    description: 'Disponível para doar',
+    example: 'true',
+  })
+  @IsBoolean({ always: true })
+  @IsOptional()
+  available?: boolean;
 
   @ApiProperty({
     description: 'Id da campanha',

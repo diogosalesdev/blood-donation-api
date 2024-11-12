@@ -97,23 +97,39 @@ export class DonorRepository {
     }
   }
 
-  async registerInCampaign(
-    donorId: string,
-    campaignId: string,
-    data: UpdateDonorDTO,
-  ) {
+  async registerInCampaign(donorId: string, campaignId: string) {
+    const user = await this.prisma.donor.findUnique({
+      where: {
+        id: donorId,
+      },
+    });
+
     const campaign = await this.prisma.campaign.findUnique({
       where: {
         id: campaignId,
       },
     });
+    if (!user) {
+      throw new NotFoundException('Usuário não cadastrado!');
+    }
 
-    data = {
-      ...data,
-      campaignId: campaign!.id,
-    };
+    if (!campaign) {
+      throw new NotFoundException(
+        'Esta campanha não existe, por favor escolha outra campanha.',
+      );
+    }
 
-    return await this.update(donorId, data);
+    if (user.campaignId) {
+      throw new ConflictException('Você já está registrado em uma campanha.');
+    }
+
+    return this.prisma.donor.update({
+      where: { id: donorId },
+      data: {
+        ...user,
+        campaignId: campaign.id,
+      },
+    });
   }
 
   async findAllEligibleForNotification() {
@@ -127,12 +143,24 @@ export class DonorRepository {
     });
   }
 
-  async donationDone(id: string) {
+  async donationDone(id: string, campaignId: string) {
     const user = await this.prisma.donor.findUnique({
       where: {
         id: id,
       },
     });
+
+    const campaign = await this.prisma.campaign.findUnique({
+      where: {
+        id: campaignId,
+      },
+    });
+
+    if (!campaign) {
+      throw new NotFoundException(
+        'Esta campanha não existe, por favor escolha outra campanha.',
+      );
+    }
 
     const now = dayjs();
 
@@ -144,23 +172,39 @@ export class DonorRepository {
       throw new NotFoundException('Usuário não cadastrado!');
     }
 
-    return this.prisma.donor.update({
-      where: { id },
-      data: {
+    if (user.campaignId) {
+      const data: UpdateDonorDTO = {
+        ...user,
         available: false,
         lastDonorDate: formattedLastDonorDate,
         unblockDonationDate: unblockDate,
-      },
-    });
+      };
+
+      return this.update(user.id, data);
+    } else {
+      const data: UpdateDonorDTO = {
+        ...user,
+        available: false,
+        lastDonorDate: formattedLastDonorDate,
+        unblockDonationDate: unblockDate,
+        campaignId: campaign.id,
+      };
+
+      return this.update(user.id, data);
+    }
   }
 
-  donationAvaliable(data: UpdateDonorDTO) {
-    const { email } = data;
+  async donationAvaliable(donorId: string) {
+    const user = await this.prisma.donor.findUnique({
+      where: {
+        id: donorId,
+      },
+    });
 
     return this.prisma.donor.update({
-      where: { email },
+      where: { id: user!.id },
       data: {
-        ...data,
+        ...user,
         available: true,
       },
     });
