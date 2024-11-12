@@ -86,7 +86,7 @@ export class DonorController {
     return this.donorService.update(id, updateDonorDTO);
   }
 
-  @Patch('register/:id')
+  @Patch('register/:id/:campaignId')
   // @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Se registra em uma campanha' })
   @ApiResponse({
@@ -96,20 +96,22 @@ export class DonorController {
   registerInCampaign(
     @Param('id') id: string,
     @Param('campaignId') campaignId: string,
-    @Body() updateDonorDTO: UpdateDonorDTO,
   ) {
-    return this.donorService.registerInCampaign(id, campaignId, updateDonorDTO);
+    return this.donorService.registerInCampaign(id, campaignId);
   }
 
-  @Patch('donation/:id')
+  @Patch('donation/:id/:campaignId')
   // @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: 'Realiza a doação' })
   @ApiResponse({
     status: 200,
     description: 'Do donation',
   })
-  donationDone(@Param('id') id: string) {
-    return this.donorService.donationDone(id);
+  donationDone(
+    @Param('id') id: string,
+    @Param('campaignId') campaignId: string,
+  ) {
+    return this.donorService.donationDone(id, campaignId);
   }
 
   @Delete(':id')
